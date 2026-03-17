@@ -113,7 +113,7 @@ export function CollectionsFilter({
                 ))}
               </div>
               <p className="text-lg font-semibold text-white">{c.title}</p>
-              <p className="text-sm text-[var(--m-muted)]">{c.subtitle}</p>
+              <p className="text-sm text-white/60">{c.subtitle}</p>
             </div>
           </Link>
         ))}

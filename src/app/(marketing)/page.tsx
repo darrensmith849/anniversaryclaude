@@ -71,7 +71,7 @@ export default function HomePage() {
                 <p className="mt-1 text-lg font-semibold text-white">
                   Cape Town Skyline Escape
                 </p>
-                <p className="text-sm text-[var(--m-muted)]">
+                <p className="text-sm text-white/60">
                   Table Mountain & the Atlantic Seaboard
                 </p>
               </div>
@@ -127,7 +127,7 @@ export default function HomePage() {
                   <p className="text-lg font-semibold text-white">
                     {c.title}
                   </p>
-                  <p className="text-sm text-[var(--m-muted)]">
+                  <p className="text-sm text-white/60">
                     {c.subtitle}
                   </p>
                 </div>
@@ -206,18 +206,18 @@ export default function HomePage() {
 
       <div className="m-divider" />
 
-      {/* ── CTA Band ─────────────────────────────────── */}
-      <section className="relative overflow-hidden px-4 py-20 md:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--m-accent)]/10 via-[var(--m-rose)]/5 to-transparent" />
+      {/* ── CTA Band (dark contrast) ─────────────────── */}
+      <section className="relative overflow-hidden bg-[var(--m-dark)] px-4 py-20 md:py-28">
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--m-accent)]/15 via-transparent to-[var(--m-accent-2)]/10" />
         <div className="container relative z-10 text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
             Ready to Create Something{" "}
             <span className="bg-gradient-to-r from-[var(--m-accent-2)] to-[var(--m-rose)] bg-clip-text text-transparent">
               Extraordinary
             </span>
             ?
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-[var(--m-muted)]">
+          <p className="mx-auto mt-4 max-w-md text-white/60">
             Four quick steps and our concierge team will be in touch within 24
             hours with a bespoke proposal.
           </p>

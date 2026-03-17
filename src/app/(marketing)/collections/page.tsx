@@ -74,14 +74,14 @@ export default function CollectionsPage() {
 
       <div className="m-divider" />
 
-      {/* CTA */}
-      <section className="relative overflow-hidden px-4 py-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--m-accent)]/10 via-[var(--m-rose)]/5 to-transparent" />
+      {/* CTA (dark contrast) */}
+      <section className="relative overflow-hidden bg-[var(--m-dark)] px-4 py-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--m-accent)]/15 via-transparent to-[var(--m-accent-2)]/10" />
         <div className="container relative z-10 text-center">
-          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
+          <h2 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
             Found something you love?
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-[var(--m-muted)]">
+          <p className="mx-auto mt-3 max-w-md text-white/60">
             Tell us your preferences and we&apos;ll craft a bespoke itinerary
             around your chosen destinations.
           </p>

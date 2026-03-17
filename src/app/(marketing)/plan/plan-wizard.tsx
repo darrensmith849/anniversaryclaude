@@ -319,7 +319,7 @@ export function PlanWizard() {
         )}
 
         {/* Nav */}
-        {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
+        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
         <div className="mt-8 flex justify-between">
           <button
             onClick={() => setStep((s) => s - 1)}

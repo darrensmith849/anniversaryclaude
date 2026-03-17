@@ -33,6 +33,7 @@ model Client {
   updatedAt        DateTime             @updatedAt
   requests         AnniversaryRequest[]
   stays            Stay[]
+  emailJobs        EmailJob[]
 }
 
 // ── Anniversary Request (pipeline) ──────────────────────────
@@ -62,6 +63,7 @@ model AnniversaryRequest {
   updatedAt     DateTime      @updatedAt
   stays         Stay[]
   tasks         Task[]
+  emailJobs     EmailJob[]
 }
 
 // ── Stay ────────────────────────────────────────────────────
@@ -88,6 +90,7 @@ model Stay {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   tasks        Task[]
+  emailJobs    EmailJob[]
 }
 
 // ── Partner ─────────────────────────────────────────────────
@@ -140,6 +143,75 @@ model Task {
   stay      Stay?        @relation(fields: [stayId], references: [id])
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+}
+
+// ── Email Template ──────────────────────────────────────────
+enum EmailTemplateType {
+  PARTNER_OUTREACH
+  VIP_PERKS_REQUEST
+  FOLLOW_UP
+  CUSTOM
+}
+
+model EmailTemplate {
+  id              String            @id @default(cuid())
+  name            String
+  type            EmailTemplateType
+  subjectTemplate String
+  bodyTemplate    String
+  variablesSchema Json?
+  active          Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  emailJobs       EmailJob[]
+}
+
+// ── Email Job (gated pipeline) ──────────────────────────────
+enum EmailJobStatus {
+  DRAFT
+  NEEDS_REVIEW
+  APPROVED
+  SENT
+  FAILED
+}
+
+model EmailJob {
+  id          String         @id @default(cuid())
+  templateId  String?
+  template    EmailTemplate? @relation(fields: [templateId], references: [id])
+  status      EmailJobStatus @default(DRAFT)
+
+  // Recipients
+  toAddresses String[]
+  ccAddresses String[]
+  bccAddresses String[]
+
+  // Rendered content
+  subject     String
+  bodyHtml    String
+  bodyText    String?
+
+  // Linked entities (optional)
+  requestId   String?
+  request     AnniversaryRequest? @relation(fields: [requestId], references: [id])
+  stayId      String?
+  stay        Stay?          @relation(fields: [stayId], references: [id])
+  clientId    String?
+  client      Client?        @relation(fields: [clientId], references: [id])
+
+  // Approval gate
+  approvedBy  String?
+  approvedAt  DateTime?
+
+  // Sending
+  sentAt      DateTime?
+  resendId    String?
+  errorMessage String?
+
+  // Metadata
+  metadata    Json?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
 }
 
 // ── Activity Log (append-only) ──────────────────────────────

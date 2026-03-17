@@ -20,7 +20,7 @@ export default function HomePage() {
             <Link href="/plan">Start Planning</Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <Link href="#how-it-works">How It Works</Link>
+            <Link href="/collections">Browse Collections</Link>
           </Button>
         </div>
       </section>

@@ -7,6 +7,8 @@ import {
   Hotel,
   Handshake,
   CheckSquare,
+  Mail,
+  FileText,
   LogOut,
 } from "lucide-react";
 
@@ -19,6 +21,8 @@ const navItems = [
   { href: "/admin/stays", label: "Stays", icon: Hotel },
   { href: "/admin/partners", label: "Partners", icon: Handshake },
   { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
+  { href: "/admin/emails", label: "Emails", icon: Mail },
+  { href: "/admin/templates", label: "Templates", icon: FileText },
 ];
 
 export default async function AdminLayout({

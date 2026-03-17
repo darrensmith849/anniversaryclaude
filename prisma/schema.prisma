@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Admin user ──────────────────────────────────────────────
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  hashedPassword String
+  name           String?
+  role           String   @default("ADMIN")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ── Client (couple / lead) ──────────────────────────────────
+model Client {
+  id               String               @id @default(cuid())
+  name             String
+  email            String               @unique
+  phone            String?
+  timezone         String               @default("Africa/Johannesburg")
+  city             String?
+  anniversaryDate  DateTime?
+  dietaryAllergies String?
+  notes            String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  requests         AnniversaryRequest[]
+  stays            Stay[]
+}
+
+// ── Anniversary Request (pipeline) ──────────────────────────
+enum RequestStatus {
+  NEW
+  QUALIFYING
+  PLANNING
+  PROPOSED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model AnniversaryRequest {
+  id            String        @id @default(cuid())
+  clientId      String
+  client        Client        @relation(fields: [clientId], references: [id])
+  status        RequestStatus @default(NEW)
+  datesFlexible Boolean       @default(false)
+  startDate     DateTime?
+  endDate       DateTime?
+  budgetBand    String?
+  vibeTags      String[]
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  stays         Stay[]
+  tasks         Task[]
+}
+
+// ── Stay ────────────────────────────────────────────────────
+enum StayStatus {
+  DRAFT
+  PROPOSED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Stay {
+  id           String        @id @default(cuid())
+  requestId    String
+  request      AnniversaryRequest @relation(fields: [requestId], references: [id])
+  clientId     String
+  client       Client        @relation(fields: [clientId], references: [id])
+  propertyName String
+  location     String?
+  checkIn      DateTime?
+  checkOut     DateTime?
+  status       StayStatus    @default(DRAFT)
+  notes        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  tasks        Task[]
+}
+
+// ── Partner ─────────────────────────────────────────────────
+enum PartnerCategory {
+  ACCOMMODATION
+  RESTAURANT
+  ACTIVITY
+  TRANSPORT
+  FLORIST
+  PHOTOGRAPHER
+  SPA
+  OTHER
+}
+
+model Partner {
+  id               String          @id @default(cuid())
+  name             String
+  category         PartnerCategory
+  location         String?
+  tags             String[]
+  isOfficialPartner Boolean        @default(false)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+}
+
+// ── Task ────────────────────────────────────────────────────
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+  CANCELLED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model Task {
+  id        String       @id @default(cuid())
+  title     String
+  status    TaskStatus   @default(TODO)
+  priority  TaskPriority @default(MEDIUM)
+  dueAt     DateTime?
+  requestId String?
+  request   AnniversaryRequest? @relation(fields: [requestId], references: [id])
+  stayId    String?
+  stay      Stay?        @relation(fields: [stayId], references: [id])
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+// ── Activity Log (append-only) ──────────────────────────────
+model ActivityLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String
+  details   String?
+  userId    String?
+  createdAt DateTime @default(now())
+}

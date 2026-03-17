@@ -2,36 +2,37 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { submitPlan, type PlanInput } from "@/lib/plan-actions";
-import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Compass,
+  Wine,
+  Sun,
+  Building,
+  Flower2,
+  Sparkles,
+  Users,
+} from "lucide-react";
 
 const VIBES = [
-  { id: "romantic", label: "Romantic & Intimate", emoji: "heart" },
-  { id: "adventure", label: "Adventure & Safari", emoji: "compass" },
-  { id: "wine", label: "Wine & Culinary", emoji: "wine" },
-  { id: "beach", label: "Beach & Coastal", emoji: "sun" },
-  { id: "urban", label: "City & Culture", emoji: "building" },
-  { id: "spa", label: "Spa & Wellness", emoji: "flower" },
-  { id: "surprise", label: "Surprise Me", emoji: "sparkle" },
-  { id: "family", label: "Family-Friendly", emoji: "users" },
+  { id: "romantic", label: "Romantic & Intimate", Icon: Heart },
+  { id: "adventure", label: "Adventure & Safari", Icon: Compass },
+  { id: "wine", label: "Wine & Culinary", Icon: Wine },
+  { id: "beach", label: "Beach & Coastal", Icon: Sun },
+  { id: "urban", label: "City & Culture", Icon: Building },
+  { id: "spa", label: "Spa & Wellness", Icon: Flower2 },
+  { id: "surprise", label: "Surprise Me", Icon: Sparkles },
+  { id: "family", label: "Family-Friendly", Icon: Users },
 ];
 
 const BUDGETS = [
-  { id: "10k-25k", label: "R10,000 – R25,000" },
-  { id: "25k-50k", label: "R25,000 – R50,000" },
-  { id: "50k-100k", label: "R50,000 – R100,000" },
-  { id: "100k-250k", label: "R100,000 – R250,000" },
-  { id: "250k+", label: "R250,000+" },
+  { id: "10k-25k", label: "Spark", range: "R10k – R25k" },
+  { id: "25k-50k", label: "Signature", range: "R25k – R50k" },
+  { id: "50k-100k", label: "Elite", range: "R50k – R100k" },
+  { id: "100k-250k", label: "Icon", range: "R100k – R250k" },
+  { id: "250k+", label: "Bespoke", range: "R250k+" },
 ];
 
 export function PlanWizard() {
@@ -93,27 +94,38 @@ export function PlanWizard() {
     <div className="grid gap-8 lg:grid-cols-3">
       <div className="lg:col-span-2">
         {/* Stepper */}
-        <div className="mb-8 flex items-center gap-2">
+        <div className="mb-10 flex items-center gap-3">
           {steps.map((s, i) => (
-            <div key={s} className="flex items-center gap-2">
-              <div
-                className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium transition-colors ${
-                  i <= step
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground"
+            <div key={s} className="flex items-center gap-3">
+              <button
+                onClick={() => i < step && setStep(i)}
+                className={`flex h-9 w-9 items-center justify-center rounded-xl text-sm font-semibold transition-all ${
+                  i === step
+                    ? "m-btn-primary shadow-lg shadow-[var(--m-accent)]/20"
+                    : i < step
+                      ? "bg-[var(--m-accent)]/20 text-[var(--m-accent)]"
+                      : "bg-[var(--m-surface)] text-[var(--m-muted)]"
                 }`}
               >
                 {i + 1}
-              </div>
+              </button>
               <span
                 className={`hidden text-sm sm:inline ${
-                  i <= step ? "text-foreground" : "text-muted-foreground"
+                  i <= step
+                    ? "font-medium text-[var(--m-text)]"
+                    : "text-[var(--m-muted)]"
                 }`}
               >
                 {s}
               </span>
               {i < steps.length - 1 && (
-                <div className="h-px w-8 bg-border" />
+                <div
+                  className={`h-px w-6 transition-colors ${
+                    i < step
+                      ? "bg-[var(--m-accent)]/40"
+                      : "bg-[var(--m-border)]"
+                  }`}
+                />
               )}
             </div>
           ))}
@@ -121,37 +133,35 @@ export function PlanWizard() {
 
         {/* Step 1: Vibe */}
         {step === 0 && (
-          <div className="space-y-4">
+          <div className="m-animate-in space-y-5">
             <h2 className="text-2xl font-bold">
               What&apos;s your ideal anniversary vibe?
             </h2>
-            <p className="text-muted-foreground">
-              Select all that appeal to you. We&apos;ll craft something perfect.
+            <p className="text-[var(--m-muted)]">
+              Select all that appeal. We&apos;ll craft something perfect.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
               {VIBES.map((v) => (
-                <Card
+                <button
                   key={v.id}
-                  className={`cursor-pointer transition-all hover:border-primary/50 ${
-                    form.vibeTags.includes(v.id)
-                      ? "border-primary bg-primary/5 ring-1 ring-primary/20"
-                      : ""
-                  }`}
                   onClick={() => toggleVibe(v.id)}
+                  className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all ${
+                    form.vibeTags.includes(v.id)
+                      ? "border-[var(--m-accent)]/50 bg-[var(--m-accent)]/10 shadow-lg shadow-[var(--m-accent)]/5"
+                      : "border-[var(--m-border)] bg-[var(--m-surface)] hover:border-[var(--m-accent)]/30"
+                  }`}
                 >
-                  <CardContent className="flex items-center gap-3 p-4">
-                    <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
-                        form.vibeTags.includes(v.id)
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted"
-                      }`}
-                    >
-                      <Heart className="h-5 w-5" />
-                    </div>
-                    <span className="font-medium">{v.label}</span>
-                  </CardContent>
-                </Card>
+                  <div
+                    className={`flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${
+                      form.vibeTags.includes(v.id)
+                        ? "bg-[var(--m-accent)] text-white"
+                        : "bg-[var(--m-surface-2)] text-[var(--m-muted)]"
+                    }`}
+                  >
+                    <v.Icon className="h-5 w-5" />
+                  </div>
+                  <span className="font-medium">{v.label}</span>
+                </button>
               ))}
             </div>
           </div>
@@ -159,48 +169,50 @@ export function PlanWizard() {
 
         {/* Step 2: Dates */}
         {step === 1 && (
-          <div className="space-y-4">
+          <div className="m-animate-in space-y-5">
             <h2 className="text-2xl font-bold">When are you celebrating?</h2>
-            <p className="text-muted-foreground">
-              Don&apos;t worry if you&apos;re not sure yet — we can work with
-              flexible dates.
+            <p className="text-[var(--m-muted)]">
+              Don&apos;t worry if you&apos;re not sure yet — flexible works too.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label>Start Date</Label>
-                <Input
+                <label className="text-sm font-medium">Start Date</label>
+                <input
                   type="date"
                   value={form.startDate}
                   onChange={(e) => update({ startDate: e.target.value })}
+                  className="h-11 w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 text-sm text-[var(--m-text)]"
                 />
               </div>
               <div className="space-y-2">
-                <Label>End Date</Label>
-                <Input
+                <label className="text-sm font-medium">End Date</label>
+                <input
                   type="date"
                   value={form.endDate}
                   onChange={(e) => update({ endDate: e.target.value })}
+                  className="h-11 w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 text-sm text-[var(--m-text)]"
                 />
               </div>
             </div>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2.5 text-sm text-[var(--m-muted)]">
               <input
                 type="checkbox"
                 checked={form.datesFlexible}
                 onChange={(e) => update({ datesFlexible: e.target.checked })}
+                className="h-4 w-4 rounded"
               />
               Our dates are flexible
             </label>
             <div className="space-y-2">
-              <Label>Anniversary Date</Label>
-              <Input
+              <label className="text-sm font-medium">Anniversary Date</label>
+              <input
                 type="date"
                 value={form.anniversaryDate}
                 onChange={(e) => update({ anniversaryDate: e.target.value })}
+                className="h-11 w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 text-sm text-[var(--m-text)]"
               />
-              <p className="text-xs text-muted-foreground">
-                The actual anniversary — we&apos;ll make sure it&apos;s extra
-                special.
+              <p className="text-xs text-[var(--m-muted)]">
+                We&apos;ll make sure this day is extra special.
               </p>
             </div>
           </div>
@@ -208,28 +220,29 @@ export function PlanWizard() {
 
         {/* Step 3: Budget */}
         {step === 2 && (
-          <div className="space-y-4">
+          <div className="m-animate-in space-y-5">
             <h2 className="text-2xl font-bold">
               What&apos;s your budget range?
             </h2>
-            <p className="text-muted-foreground">
-              This helps us curate the right experiences. All budgets welcome.
+            <p className="text-[var(--m-muted)]">
+              This helps us curate the right tier. All budgets welcome.
             </p>
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {BUDGETS.map((b) => (
-                <Card
+                <button
                   key={b.id}
-                  className={`cursor-pointer transition-all hover:border-primary/50 ${
-                    form.budgetBand === b.id
-                      ? "border-primary bg-primary/5 ring-1 ring-primary/20"
-                      : ""
-                  }`}
                   onClick={() => update({ budgetBand: b.id })}
+                  className={`rounded-2xl border p-5 text-left transition-all ${
+                    form.budgetBand === b.id
+                      ? "border-[var(--m-accent)]/50 bg-[var(--m-accent)]/10 shadow-lg shadow-[var(--m-accent)]/5"
+                      : "border-[var(--m-border)] bg-[var(--m-surface)] hover:border-[var(--m-accent)]/30"
+                  }`}
                 >
-                  <CardContent className="p-4">
-                    <span className="font-medium">{b.label}</span>
-                  </CardContent>
-                </Card>
+                  <p className="text-xs font-medium uppercase tracking-wider text-[var(--m-accent-2)]">
+                    {b.label}
+                  </p>
+                  <p className="mt-1 text-lg font-bold">{b.range}</p>
+                </button>
               ))}
             </div>
           </div>
@@ -237,154 +250,164 @@ export function PlanWizard() {
 
         {/* Step 4: Details */}
         {step === 3 && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold">Almost there — tell us more</h2>
-            <p className="text-muted-foreground">
-              A few details so we can reach out with your bespoke proposal.
+          <div className="m-animate-in space-y-5">
+            <h2 className="text-2xl font-bold">Almost there — a few details</h2>
+            <p className="text-[var(--m-muted)]">
+              So we can reach out with your bespoke proposal.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label>Your Names *</Label>
-                <Input
+                <label className="text-sm font-medium">Your Names *</label>
+                <input
                   value={form.name}
                   onChange={(e) => update({ name: e.target.value })}
                   placeholder="Jane & John"
+                  className="h-11 w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 text-sm text-[var(--m-text)] placeholder:text-[var(--m-muted)]/50"
                 />
               </div>
               <div className="space-y-2">
-                <Label>Email *</Label>
-                <Input
+                <label className="text-sm font-medium">Email *</label>
+                <input
                   type="email"
                   value={form.email}
                   onChange={(e) => update({ email: e.target.value })}
                   placeholder="you@example.com"
+                  className="h-11 w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 text-sm text-[var(--m-text)] placeholder:text-[var(--m-muted)]/50"
                 />
               </div>
               <div className="space-y-2">
-                <Label>Phone</Label>
-                <Input
+                <label className="text-sm font-medium">Phone</label>
+                <input
                   value={form.phone}
                   onChange={(e) => update({ phone: e.target.value })}
                   placeholder="+27 82 000 0000"
+                  className="h-11 w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 text-sm text-[var(--m-text)] placeholder:text-[var(--m-muted)]/50"
                 />
               </div>
               <div className="space-y-2">
-                <Label>City</Label>
-                <Input
+                <label className="text-sm font-medium">City</label>
+                <input
                   value={form.city}
                   onChange={(e) => update({ city: e.target.value })}
                   placeholder="Cape Town"
+                  className="h-11 w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 text-sm text-[var(--m-text)] placeholder:text-[var(--m-muted)]/50"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <Label>Dietary Requirements / Allergies</Label>
-              <Input
+              <label className="text-sm font-medium">
+                Dietary / Allergies
+              </label>
+              <input
                 value={form.dietaryAllergies}
                 onChange={(e) => update({ dietaryAllergies: e.target.value })}
                 placeholder="Vegetarian, nut allergy, etc."
+                className="h-11 w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 text-sm text-[var(--m-text)] placeholder:text-[var(--m-muted)]/50"
               />
             </div>
             <div className="space-y-2">
-              <Label>Anything else we should know?</Label>
+              <label className="text-sm font-medium">Anything else?</label>
               <textarea
                 value={form.notes}
                 onChange={(e) => update({ notes: e.target.value })}
                 rows={4}
-                className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                placeholder="Special requests, must-haves, surprises you'd love..."
+                placeholder="Special requests, must-haves, surprises..."
+                className="w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 py-3 text-sm text-[var(--m-text)] placeholder:text-[var(--m-muted)]/50"
               />
             </div>
           </div>
         )}
 
-        {/* Navigation */}
-        {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
-        <div className="mt-6 flex justify-between">
-          <Button
-            variant="outline"
+        {/* Nav */}
+        {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
+        <div className="mt-8 flex justify-between">
+          <button
             onClick={() => setStep((s) => s - 1)}
             disabled={step === 0}
+            className="m-btn-glass inline-flex h-11 items-center rounded-full px-6 text-sm font-medium disabled:opacity-30"
           >
             <ChevronLeft className="mr-1 h-4 w-4" /> Back
-          </Button>
+          </button>
           {step < 3 ? (
-            <Button
+            <button
               onClick={() => setStep((s) => s + 1)}
               disabled={!canAdvance()}
+              className="m-btn-primary inline-flex h-11 items-center rounded-full px-8 text-sm disabled:opacity-40"
             >
               Next <ChevronRight className="ml-1 h-4 w-4" />
-            </Button>
+            </button>
           ) : (
-            <Button
+            <button
               onClick={handleSubmit}
               disabled={!canAdvance() || pending}
+              className="m-btn-primary inline-flex h-11 items-center rounded-full px-8 text-sm disabled:opacity-40"
             >
               {pending ? "Submitting..." : "Submit Your Plan"}
-            </Button>
+            </button>
           )}
         </div>
       </div>
 
-      {/* Right-side summary */}
+      {/* Summary panel */}
       <div className="hidden lg:block">
-        <Card className="sticky top-8">
-          <CardHeader>
-            <CardTitle className="text-base">Your Plan So Far</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-sm">
-            {form.vibeTags.length > 0 && (
-              <div>
-                <span className="text-muted-foreground">Vibes</span>
-                <div className="mt-1 flex flex-wrap gap-1">
-                  {form.vibeTags.map((v) => (
-                    <Badge key={v} variant="secondary" className="text-xs">
-                      {VIBES.find((vb) => vb.id === v)?.label || v}
-                    </Badge>
-                  ))}
-                </div>
+        <div className="m-glass sticky top-24 space-y-4 p-6">
+          <p className="text-xs font-medium uppercase tracking-widest text-[var(--m-accent)]">
+            Your Plan So Far
+          </p>
+          {form.vibeTags.length > 0 && (
+            <div>
+              <span className="text-xs text-[var(--m-muted)]">Vibes</span>
+              <div className="mt-1 flex flex-wrap gap-1.5">
+                {form.vibeTags.map((v) => (
+                  <span
+                    key={v}
+                    className="rounded-full bg-[var(--m-accent)]/15 px-2.5 py-0.5 text-xs text-[var(--m-accent)]"
+                  >
+                    {VIBES.find((vb) => vb.id === v)?.label || v}
+                  </span>
+                ))}
               </div>
-            )}
-            {(form.startDate || form.endDate) && (
-              <div>
-                <span className="text-muted-foreground">Dates</span>
-                <p>
-                  {form.startDate || "TBD"} — {form.endDate || "TBD"}
-                  {form.datesFlexible && " (flexible)"}
-                </p>
-              </div>
-            )}
-            {form.budgetBand && (
-              <div>
-                <span className="text-muted-foreground">Budget</span>
-                <p>
+            </div>
+          )}
+          {(form.startDate || form.endDate) && (
+            <div>
+              <span className="text-xs text-[var(--m-muted)]">Dates</span>
+              <p className="text-sm">
+                {form.startDate || "TBD"} — {form.endDate || "TBD"}
+                {form.datesFlexible && (
+                  <span className="ml-1 text-xs text-[var(--m-accent-2)]">
+                    (flexible)
+                  </span>
+                )}
+              </p>
+            </div>
+          )}
+          {form.budgetBand && (
+            <div>
+              <span className="text-xs text-[var(--m-muted)]">Budget</span>
+              <p className="text-sm font-medium">
+                {BUDGETS.find((b) => b.id === form.budgetBand)?.range}
+                <span className="ml-1.5 text-xs text-[var(--m-accent-2)]">
                   {BUDGETS.find((b) => b.id === form.budgetBand)?.label}
-                </p>
-              </div>
+                </span>
+              </p>
+            </div>
+          )}
+          {form.name && (
+            <div>
+              <span className="text-xs text-[var(--m-muted)]">Names</span>
+              <p className="text-sm">{form.name}</p>
+            </div>
+          )}
+          {!form.vibeTags.length &&
+            !form.startDate &&
+            !form.budgetBand &&
+            !form.name && (
+              <p className="text-sm text-[var(--m-muted)]">
+                Your selections will appear here as you go.
+              </p>
             )}
-            {form.name && (
-              <div>
-                <span className="text-muted-foreground">Names</span>
-                <p>{form.name}</p>
-              </div>
-            )}
-            {form.email && (
-              <div>
-                <span className="text-muted-foreground">Email</span>
-                <p>{form.email}</p>
-              </div>
-            )}
-            {form.vibeTags.length === 0 &&
-              !form.startDate &&
-              !form.budgetBand &&
-              !form.name && (
-                <p className="text-muted-foreground">
-                  Start filling in your preferences and they&apos;ll appear
-                  here.
-                </p>
-              )}
-          </CardContent>
-        </Card>
+        </div>
       </div>
     </div>
   );

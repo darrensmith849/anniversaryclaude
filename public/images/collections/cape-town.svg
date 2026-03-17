@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <defs>
+    <linearGradient id="ct-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a0a2e"/>
+      <stop offset="40%" stop-color="#3d1d6b"/>
+      <stop offset="70%" stop-color="#c2527a"/>
+      <stop offset="100%" stop-color="#f4a261"/>
+    </linearGradient>
+    <linearGradient id="ct-ocean" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a5276"/>
+      <stop offset="100%" stop-color="#0e2f44"/>
+    </linearGradient>
+    <radialGradient id="ct-sun" cx="0.7" cy="0.65" r="0.15">
+      <stop offset="0%" stop-color="#ffd700" stop-opacity="1"/>
+      <stop offset="60%" stop-color="#f4a261" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#f4a261" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#ct-sky)"/>
+  <circle cx="560" cy="310" r="100" fill="url(#ct-sun)"/>
+  <!-- Table Mountain silhouette -->
+  <path d="M0 380 L80 280 L140 250 L200 240 L320 240 L380 250 L400 280 L420 250 L440 240 L520 235 L540 240 L560 280 L600 300 L700 340 L800 360 L800 500 L0 500Z" fill="#1a0a2e" opacity="0.85"/>
+  <!-- Lions Head -->
+  <path d="M580 300 L620 230 L660 280 L700 340" fill="#1a0a2e" opacity="0.7"/>
+  <!-- Ocean -->
+  <rect x="0" y="380" width="800" height="120" fill="url(#ct-ocean)" opacity="0.7"/>
+  <!-- Sun reflection on water -->
+  <ellipse cx="560" cy="420" rx="80" ry="8" fill="#ffd700" opacity="0.15"/>
+  <ellipse cx="560" cy="440" rx="50" ry="4" fill="#ffd700" opacity="0.1"/>
+  <!-- City lights -->
+  <circle cx="200" cy="370" r="1.5" fill="#ffd700" opacity="0.6"/>
+  <circle cx="230" cy="365" r="1" fill="#ffd700" opacity="0.5"/>
+  <circle cx="260" cy="368" r="1.5" fill="#ffd700" opacity="0.7"/>
+  <circle cx="300" cy="372" r="1" fill="#ffd700" opacity="0.4"/>
+  <circle cx="340" cy="366" r="1.5" fill="#ffd700" opacity="0.6"/>
+  <circle cx="380" cy="370" r="1" fill="#ffd700" opacity="0.5"/>
+  <circle cx="420" cy="365" r="1" fill="#ffd700" opacity="0.4"/>
+  <circle cx="460" cy="370" r="1.5" fill="#ffd700" opacity="0.5"/>
+</svg>

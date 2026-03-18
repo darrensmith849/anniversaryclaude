@@ -1,25 +1,4 @@
 import Link from "next/link";
-import { HeroReel, type HeroClip } from "@/components/marketing/HeroReel";
-import { CoverageSignal } from "@/components/marketing/infographics/CoverageSignal";
-import { JourneyArc } from "@/components/marketing/infographics/JourneyArc";
-
-const heroClips: HeroClip[] = [
-  {
-    src: "/videos/hero/hero-01-kruger.mp4",
-    poster: "/images/hero/hero-01-kruger.jpg",
-    label: "Kruger",
-  },
-  {
-    src: "/videos/hero/hero-02-cape-town.mp4",
-    poster: "/images/hero/hero-02-cape-town.jpg",
-    label: "Cape Town",
-  },
-  {
-    src: "/videos/hero/hero-03-winelands.mp4",
-    poster: "/images/hero/hero-03-winelands.jpg",
-    label: "Winelands",
-  },
-];
 
 const heroChips = [
   "Safari Escapes",
@@ -53,36 +32,42 @@ const editorialCards = [
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col">
-      <section className="relative min-h-[94vh] px-4 pb-16 pt-24 md:pt-28">
-        <HeroReel clips={heroClips} />
+    <div className="home-editorial-root flex flex-col">
+      <section className="home-hero relative min-h-screen px-4 pb-12 pt-24 md:pt-28">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/hero/hero-02-cape-town.jpg')" }}
+          aria-hidden="true"
+        />
 
-        <div className="container relative z-10 flex min-h-[72vh] items-center justify-center">
-          <div className="mx-auto max-w-4xl text-center">
+        <div className="home-hero-overlay absolute inset-0" aria-hidden="true" />
+
+        <div className="container relative z-10 flex min-h-[74vh] items-center justify-center">
+          <div className="mx-auto max-w-[54rem] text-center">
             <p className="m-overline">South Africa&apos;s Anniversary Concierge</p>
-            <h1 className="m-display mt-4 text-5xl leading-[0.95] text-[var(--m-ink)] md:text-7xl xl:text-[5.5rem]">
-              Romantic <span className="m-gradient-text">Journeys</span>,
+            <h1 className="m-display mt-4 text-5xl leading-[0.95] text-[var(--m-text)] md:text-7xl xl:text-[5.5rem]">
+              Romantic <span className="home-hero-accent">Journeys</span>,
               <br />
               Planned Beautifully
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[var(--m-muted)] md:text-lg">
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[var(--m-text-muted)] md:text-lg">
               Curated anniversary escapes across South Africa with luxury stays, thoughtful details, and seamless arrangements.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link href="/plan" className="m-btn-primary">
-                Start Your Brief
+              <Link href="/plan" className="home-btn-primary">
+                Start your brief
               </Link>
-              <Link href="/safari-anniversary" className="m-btn-glass">
-                View Collections
+              <Link href="/collections" className="home-btn-secondary">
+                View collections
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="container relative z-10 pb-2">
-          <div className="m-glass m-hero-strip px-3 py-3 md:px-4 md:py-4">
-            {heroChips.map((chip, index) => (
-              <div key={chip} className={`m-chip ${index === 0 ? "m-chip-active" : ""}`}>
+        <div className="container relative z-10">
+          <div className="home-rail grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+            {heroChips.map((chip) => (
+              <div key={chip} className="home-rail-item">
                 {chip}
               </div>
             ))}
@@ -90,44 +75,52 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="m-section px-4 pt-0">
-        <div className="container grid gap-8 lg:grid-cols-[1.02fr_1.1fr] lg:items-center">
-          <div className="space-y-4">
-            <p className="m-overline">How It Works</p>
-            <h2 className="m-display text-4xl leading-tight text-[var(--m-ink)] md:text-5xl">
-              Concierge Flow,
-              <br />
-              Designed For Milestone Ease
-            </h2>
-            <p className="max-w-xl text-[var(--m-muted)]">
-              From brief to celebration, every step is sequenced for clarity: destination curation, outreach, tailored perks, and a confirmed plan ready for arrival.
-            </p>
+      <section className="m-section px-4">
+        <div className="container">
+          <div className="home-boxed-panel grid gap-10 p-7 md:p-10 lg:grid-cols-[1.25fr_0.9fr]">
+            <div className="space-y-4">
+              <p className="m-overline">What We Do</p>
+              <h2 className="m-display text-4xl leading-tight text-[var(--m-text)] md:text-6xl">
+                Curated Anniversary Escapes,
+                <br />
+                Structured With Editorial Precision
+              </h2>
+              <p className="max-w-2xl text-[var(--m-text-muted)]">
+                South Africa collections, concierge-led planning, and elevated touches designed around the way you want to celebrate.
+              </p>
+            </div>
+            <div className="home-mini-box self-center">
+              <ul className="space-y-3 text-sm leading-relaxed text-[var(--m-text-muted)]">
+                <li>Curated shortlists in 24-48h</li>
+                <li>Partner outreach and perks requests handled for you</li>
+                <li>A seamless plan, beautifully delivered</li>
+              </ul>
+            </div>
           </div>
-          <JourneyArc />
         </div>
       </section>
 
       <section className="m-section px-4 pt-0">
         <div className="container relative space-y-12">
           <div className="max-w-3xl space-y-4">
-            <p className="m-overline">What We Do</p>
-            <h2 className="m-display text-4xl leading-tight text-[var(--m-ink)] md:text-6xl">
-              Curated Anniversary Escapes,
+            <p className="m-overline">How It Works</p>
+            <h2 className="m-display text-4xl leading-tight text-[var(--m-text)] md:text-5xl">
+              Every Anniversary Itinerary,
               <br />
-              Structured With Editorial Precision
+              Curated End To End
             </h2>
-            <p className="max-w-2xl text-[var(--m-muted)]">
-              South Africa collections, concierge-led planning, and elevated touches designed around the way you want to celebrate.
+            <p className="max-w-xl text-[var(--m-text-muted)]">
+              Discover recommended stays, shape your preferred mood, and move from first brief to confirmed celebration with concierge guidance at each step.
             </p>
           </div>
 
           <div className="grid gap-5 lg:grid-cols-3">
             {editorialCards.map((card) => (
-              <article key={card.title} className="m-card p-7">
+              <article key={card.title} className="home-card p-7">
                 <p className="m-overline">{card.overline}</p>
-                <h3 className="m-display mt-3 text-3xl text-[var(--m-ink)]">{card.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--m-muted)]">{card.text}</p>
-                <Link href={card.href} className="m-link-accent mt-6 inline-flex text-xs uppercase tracking-[0.15em] text-[var(--m-amethyst)]">
+                <h3 className="m-display mt-3 text-3xl text-[var(--m-text)]">{card.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--m-text-muted)]">{card.text}</p>
+                <Link href={card.href} className="home-link mt-6 inline-flex text-xs uppercase tracking-[0.15em]">
                   Explore
                 </Link>
               </article>
@@ -138,7 +131,15 @@ export default function HomePage() {
 
       <section className="m-section px-4 pt-0">
         <div className="container">
-          <CoverageSignal />
+          <div className="home-cta-band flex flex-col items-start justify-between gap-5 p-7 md:flex-row md:items-center md:p-9">
+            <div>
+              <p className="m-overline">Plan Your Anniversary</p>
+              <h3 className="m-display mt-2 text-3xl text-[var(--m-text)] md:text-4xl">Ready to plan something unforgettable?</h3>
+            </div>
+            <Link href="/plan" className="home-btn-primary">
+              Start your brief
+            </Link>
+          </div>
         </div>
       </section>
     </div>

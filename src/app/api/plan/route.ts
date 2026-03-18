@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { planFormSchema } from "@/lib/validations";
+import { logActivity } from "@/lib/activity";
 
 export async function POST(request: Request) {
   try {
@@ -24,37 +25,60 @@ export async function POST(request: Request) {
         name: data.name,
         phone: data.phone || undefined,
         dietaryAllergies: data.dietaryAllergies || undefined,
+        accessibility: data.accessibility || undefined,
+        city: data.departureCity || undefined,
       },
       create: {
         name: data.name,
         email: data.email,
         phone: data.phone || undefined,
         dietaryAllergies: data.dietaryAllergies || undefined,
+        accessibility: data.accessibility || undefined,
+        city: data.departureCity || undefined,
       },
     });
 
-    // Create anniversary request
+    // Create anniversary request with full brief
     const anniversaryRequest = await db.anniversaryRequest.create({
       data: {
         clientId: client.id,
         status: "NEW",
+
+        // Occasion
+        anniversaryYear: data.anniversaryYear || undefined,
+        celebrationWindow: data.celebrationWindow || undefined,
         datesFlexible: data.datesFlexible,
         startDate: data.startDate ? new Date(data.startDate) : undefined,
         endDate: data.endDate ? new Date(data.endDate) : undefined,
+        travelRegions: data.travelRegions,
+
+        // Experience
+        experienceStyles: data.experienceStyles,
+        luxuryTone: data.luxuryTone || undefined,
+        pace: data.pace || undefined,
+        specialMoments: data.specialMoments || undefined,
+
+        // Trip
+        tripLength: data.tripLength || undefined,
+        travellerCount: data.travellerCount || undefined,
+        departureCity: data.departureCity || undefined,
         budgetBand: data.budgetBand,
-        vibeTags: data.vibeTags,
-        notes: [data.mustHaves, data.notes].filter(Boolean).join("\n\n"),
+
+        // Personal
+        preferences: data.preferences || undefined,
+        surprises: data.surprises || undefined,
+        messageToTeam: data.messageToTeam || undefined,
+
+        // Legacy
+        vibeTags: data.experienceStyles,
       },
     });
 
-    // Activity log
-    await db.activityLog.create({
-      data: {
-        requestId: anniversaryRequest.id,
-        action: "REQUEST_CREATED",
-        description: "New anniversary request submitted via planning brief.",
-        actor: "website",
-      },
+    await logActivity({
+      requestId: anniversaryRequest.id,
+      action: "REQUEST_CREATED",
+      description: "New anniversary request submitted via planning brief.",
+      actor: "website",
     });
 
     return NextResponse.json({ success: true, requestId: anniversaryRequest.id });

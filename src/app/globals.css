@@ -7,43 +7,68 @@
   --foreground: #1A1A2E;
 }
 
-/* Soft luxury glow backdrop */
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* Subtle cinematic backdrop glow */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(169, 143, 219, 0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 50% at 80% 80%, rgba(180, 83, 9, 0.04) 0%, transparent 70%),
-    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(248, 246, 252, 0.5) 0%, transparent 80%);
+    radial-gradient(ellipse 50% 35% at 15% 5%, rgba(169, 143, 219, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 85% 85%, rgba(180, 83, 9, 0.03) 0%, transparent 70%);
   pointer-events: none;
 }
 
-/* Luxury serif headings */
+/* Serif headings — system fonts only, no network fetch */
 h1, h2, h3 {
-  font-family: Georgia, Cambria, "Times New Roman", serif;
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.01em;
 }
 
-/* Smooth focus outlines */
+/* Smooth focus */
 *:focus-visible {
-  outline: 2px solid rgba(169, 143, 219, 0.5);
+  outline: 2px solid rgba(169, 143, 219, 0.4);
   outline-offset: 2px;
 }
 
 /* Card hover lift */
 @layer utilities {
   .hover-lift {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
   }
+
+  .editorial-panel {
+    background: rgba(253, 251, 247, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* Smooth page transitions */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.animate-in-delay {
+  animation: fadeInUp 0.5s ease-out 0.15s both;
 }

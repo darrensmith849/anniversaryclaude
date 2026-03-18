@@ -11,13 +11,11 @@ datasource db {
 
 enum RequestStatus {
   NEW
-  QUALIFIED
-  SHORTLIST_SENT
-  OUTREACH_IN_PROGRESS
-  OPTIONS_RECEIVED
-  DECIDED
-  BOOKED
-  COMPLETE
+  REVIEWING
+  PROPOSAL_PENDING
+  AWAITING_CLIENT
+  CONFIRMED
+  CLOSED
   CANCELLED
 }
 
@@ -81,6 +79,7 @@ model Client {
   city             String?
   anniversaryDate  DateTime?
   dietaryAllergies String?
+  accessibility    String?
   notes            String?
   createdAt        DateTime             @default(now())
   updatedAt        DateTime             @updatedAt
@@ -93,17 +92,44 @@ model AnniversaryRequest {
   clientId      String
   client        Client        @relation(fields: [clientId], references: [id])
   status        RequestStatus @default(NEW)
-  datesFlexible Boolean       @default(false)
-  startDate     DateTime?
-  endDate       DateTime?
-  budgetBand    BudgetBand?
+
+  // ─── Brief: Occasion ────────────────────
+  anniversaryYear  String?
+  celebrationWindow String?
+  datesFlexible    Boolean       @default(false)
+  startDate        DateTime?
+  endDate          DateTime?
+  travelRegions    String[]
+
+  // ─── Brief: Experience ──────────────────
+  experienceStyles String[]
+  luxuryTone       String?
+  pace             String?
+  specialMoments   String?
+
+  // ─── Brief: Trip Details ────────────────
+  tripLength       String?
+  travellerCount   String?
+  departureCity    String?
+  budgetBand       BudgetBand?
+
+  // ─── Brief: Personal ───────────────────
+  preferences      String?
+  surprises        String?
+  messageToTeam    String?
+
+  // ─── Legacy / flexible ─────────────────
   vibeTags      String[]
   notes         String?
+
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   stays         Stay[]
   tasks         Task[]
   activityLogs  ActivityLog[]
+
+  // Phase 2: email thread linking
+  // emailThreadId String?
 }
 
 model Stay {
@@ -117,6 +143,8 @@ model Stay {
   checkIn      DateTime?
   checkOut     DateTime?
   status       StayStatus @default(DRAFT)
+  confirmationRef String?
+  costEstimate    String?
   notes        String?
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
@@ -127,6 +155,9 @@ model Partner {
   id               String          @id @default(cuid())
   name             String
   category         PartnerCategory
+  contactName      String?
+  contactEmail     String?
+  contactPhone     String?
   location         String?
   tags             String[]
   notes            String?

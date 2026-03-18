@@ -15,7 +15,22 @@ export function formatDate(date: Date | string | null | undefined): string {
 }
 
 export function statusLabel(status: string): string {
-  return status.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const labels: Record<string, string> = {
+    NEW: "New",
+    REVIEWING: "Reviewing",
+    PROPOSAL_PENDING: "Proposal Pending",
+    AWAITING_CLIENT: "Awaiting Client",
+    CONFIRMED: "Confirmed",
+    CLOSED: "Closed",
+    CANCELLED: "Cancelled",
+    DRAFT: "Draft",
+    PROPOSED: "Proposed",
+    COMPLETED: "Completed",
+    TODO: "To Do",
+    IN_PROGRESS: "In Progress",
+    DONE: "Done",
+  };
+  return labels[status] ?? status.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 export function budgetLabel(band: string | null | undefined): string {
@@ -29,3 +44,23 @@ export function budgetLabel(band: string | null | undefined): string {
   };
   return map[band] ?? band;
 }
+
+export const REQUEST_STATUSES = [
+  "NEW",
+  "REVIEWING",
+  "PROPOSAL_PENDING",
+  "AWAITING_CLIENT",
+  "CONFIRMED",
+  "CLOSED",
+  "CANCELLED",
+] as const;
+
+export const STATUS_COLORS: Record<string, "default" | "secondary" | "success" | "warning" | "destructive"> = {
+  NEW: "warning",
+  REVIEWING: "secondary",
+  PROPOSAL_PENDING: "secondary",
+  AWAITING_CLIENT: "default",
+  CONFIRMED: "success",
+  CLOSED: "success",
+  CANCELLED: "destructive",
+};

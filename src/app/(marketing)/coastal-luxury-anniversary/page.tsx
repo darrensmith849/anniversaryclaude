@@ -1,28 +1,58 @@
 import { CollectionPage } from "@/components/marketing/CollectionPage";
 
 export const metadata = {
-  title: "Coastal Luxury Anniversary | Luxury Concierge South Africa",
+  title: "Coastal Luxury Anniversary | Luxury Anniversary Concierge South Africa",
   description:
-    "Dramatic coastlines, private beach villas, whale watching, and the finest seafood the Cape has to offer.",
+    "Dramatic coastlines, private beach villas, and the finest seafood — celebrate your anniversary along South Africa's stunning coast.",
 };
 
 export default function CoastalPage() {
   return (
     <CollectionPage
       title="Coastal Luxury"
-      subtitle="Ocean & clifftop indulgence"
-      description="South Africa's coastline stretches from the wild Atlantic to the warm Indian Ocean. Whether it's a clifftop villa in Hermanus, a private beach house in Plettenberg Bay, or a luxury retreat along the Garden Route, our coastal anniversaries immerse you in the rhythm of the sea."
+      subtitle="Where ocean meets opulence"
+      description="South Africa's coastline stretches from the wild Atlantic to the warm Indian Ocean — each stretch with its own character and drama. Whether it's a clifftop suite in Hermanus, a private beach house on the Garden Route, or a barefoot villa in the Overberg, coastal anniversaries are defined by salt air, endless horizons, and the restoring rhythm of the sea."
+      heroGradient="linear-gradient(135deg, #0C2D3F 0%, #164B60 30%, #1B6B8A 60%, #2B90B0 100%)"
+      location="Garden Route, Hermanus & Cape Coast"
       highlights={[
-        "Private beach villa stays with panoramic ocean views",
-        "Whale watching boat excursions (seasonal)",
-        "Sunset catamaran cruises with champagne service",
-        "Fresh seafood feasts prepared by private chefs",
-        "Couples' thalassotherapy and ocean-view spa treatments",
-        "Guided coastal hikes and marine wildlife encounters",
+        {
+          title: "Clifftop villa stays",
+          description: "Wake to crashing waves and unbroken ocean views from your private terrace or infinity pool.",
+        },
+        {
+          title: "Whale watching",
+          description: "Seasonal boat excursions in Walker Bay — some of the best land-based whale viewing in the world.",
+        },
+        {
+          title: "Sunset sailing",
+          description: "Private catamaran cruise along the coast with champagne, platters, and the sinking sun.",
+        },
+        {
+          title: "Seafood feasts",
+          description: "Fresh catches prepared by private chefs — lobster on the deck, oysters at sunset, beach braais.",
+        },
+        {
+          title: "Thalassotherapy spa",
+          description: "Ocean-view treatments using marine extracts and local botanicals, designed for two.",
+        },
+        {
+          title: "Marine encounters",
+          description: "Guided kayak and snorkel experiences, seal colony visits, and marine big-five boat safaris.",
+        },
       ]}
-      location="Garden Route & Cape Coast"
-      accentFrom="rgba(14, 116, 144, 0.05)"
-      accentTo="rgba(248, 250, 252, 0.8)"
+      signatureExperiences={[
+        "Private beach picnic with a chef-prepared seafood platter and chilled wine",
+        "Guided cliff-path walk ending at a hidden cove for a champagne surprise",
+        "Helicopter transfer along the coastline with a scenic lunch stop",
+        "Full-moon beach dinner with live acoustic music",
+      ]}
+      idealFor={[
+        "Beach lovers",
+        "Wellness seekers",
+        "Seafood enthusiasts",
+        "Slow-pace romantics",
+        "Couples seeking restoration",
+      ]}
     />
   );
 }

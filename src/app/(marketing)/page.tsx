@@ -19,11 +19,6 @@ const heroClips: HeroClip[] = [
     poster: "/images/hero/hero-03-winelands.jpg",
     label: "Winelands",
   },
-  {
-    src: "/videos/hero/hero-04-luxury-hotel.mp4",
-    poster: "/images/hero/hero-04-luxury-hotel.jpg",
-    label: "Luxury Hotel",
-  },
 ];
 
 const heroChips = [

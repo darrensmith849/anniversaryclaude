@@ -84,9 +84,9 @@ export function HeroReel({ clips, intervalMs = 7000 }: HeroReelProps) {
         />
       )}
 
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(1000px_520px_at_22%_18%,rgba(122,60,255,0.34),transparent_58%),radial-gradient(760px_460px_at_78%_70%,rgba(242,179,95,0.18),transparent_62%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,4,8,0.38)_0%,rgba(5,4,8,0.56)_45%,rgba(5,4,8,0.82)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_32%,rgba(0,0,0,0.52)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(1000px_560px_at_20%_12%,rgba(109,40,217,0.22),transparent_58%),radial-gradient(760px_460px_at_80%_72%,rgba(242,179,95,0.16),transparent_62%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0.46)_46%,rgba(251,250,255,0.72)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_34%,rgba(11,16,32,0.22)_100%)]" />
 
       {reelEnabled ? (
         <div className="absolute bottom-5 right-5 z-20 flex items-center gap-2">

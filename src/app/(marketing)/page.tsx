@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { HeroReel, type HeroClip } from "@/components/marketing/HeroReel";
+import { CoverageSignal } from "@/components/marketing/infographics/CoverageSignal";
+import { JourneyArc } from "@/components/marketing/infographics/JourneyArc";
 
 const heroClips: HeroClip[] = [
   {
@@ -18,9 +20,9 @@ const heroClips: HeroClip[] = [
     label: "Winelands",
   },
   {
-    src: "/videos/hero/hero-04-hotel.mp4",
-    poster: "/images/hero/hero-04-hotel.jpg",
-    label: "Hotel",
+    src: "/videos/hero/hero-04-luxury-hotel.mp4",
+    poster: "/images/hero/hero-04-luxury-hotel.jpg",
+    label: "Luxury Hotel",
   },
 ];
 
@@ -63,7 +65,7 @@ export default function HomePage() {
         <div className="container relative z-10 flex min-h-[72vh] items-center justify-center">
           <div className="mx-auto max-w-4xl text-center">
             <p className="m-overline">South Africa&apos;s Anniversary Concierge</p>
-            <h1 className="m-display mt-4 text-5xl leading-[0.95] text-[var(--m-cream)] md:text-7xl xl:text-[5.5rem]">
+            <h1 className="m-display mt-4 text-5xl leading-[0.95] text-[var(--m-ink)] md:text-7xl xl:text-[5.5rem]">
               Romantic Journeys,
               <br />
               Planned Beautifully
@@ -97,7 +99,7 @@ export default function HomePage() {
         <div className="container relative space-y-12">
           <div className="max-w-3xl space-y-4">
             <p className="m-overline">What We Do</p>
-            <h2 className="m-display text-4xl leading-tight text-[var(--m-cream)] md:text-6xl">
+            <h2 className="m-display text-4xl leading-tight text-[var(--m-ink)] md:text-6xl">
               Curated Anniversary Escapes,
               <br />
               Structured With Editorial Precision
@@ -111,14 +113,37 @@ export default function HomePage() {
             {editorialCards.map((card) => (
               <article key={card.title} className="m-card p-7">
                 <p className="m-overline">{card.overline}</p>
-                <h3 className="m-display mt-3 text-3xl text-[var(--m-cream)]">{card.title}</h3>
+                <h3 className="m-display mt-3 text-3xl text-[var(--m-ink)]">{card.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-[var(--m-muted)]">{card.text}</p>
-                <Link href={card.href} className="mt-6 inline-flex text-xs uppercase tracking-[0.15em] text-[var(--m-amber)] hover:text-[var(--m-cream)]">
+                <Link href={card.href} className="mt-6 inline-flex text-xs uppercase tracking-[0.15em] text-[var(--m-amethyst)] hover:text-[var(--m-ink)]">
                   Explore
                 </Link>
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="m-section px-4 pt-0">
+        <div className="container grid gap-8 lg:grid-cols-[1.02fr_1.1fr] lg:items-center">
+          <div className="space-y-4">
+            <p className="m-overline">How It Works</p>
+            <h2 className="m-display text-4xl leading-tight text-[var(--m-ink)] md:text-5xl">
+              Concierge Flow,
+              <br />
+              Designed For Milestone Ease
+            </h2>
+            <p className="max-w-xl text-[var(--m-muted)]">
+              From brief to celebration, every step is sequenced for clarity: destination curation, outreach, tailored perks, and a confirmed plan ready for arrival.
+            </p>
+          </div>
+          <JourneyArc />
+        </div>
+      </section>
+
+      <section className="m-section px-4 pt-0">
+        <div className="container">
+          <CoverageSignal />
         </div>
       </section>
     </div>

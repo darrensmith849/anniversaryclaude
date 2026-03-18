@@ -1,5 +1,17 @@
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
+
+const serif = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--m-serif",
+  weight: ["500", "600", "700"],
+});
+
+const sans = Manrope({
+  subsets: ["latin"],
+  variable: "--m-sans",
+  weight: ["400", "500", "600", "700"],
+});
 
 export default function MarketingLayout({
   children,
@@ -7,32 +19,38 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="marketing-theme flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 border-b border-[var(--m-border)] bg-[var(--m-bg)]/90 backdrop-blur-xl">
+    <div className={`marketing-theme ${serif.variable} ${sans.variable} m-body flex min-h-screen flex-col`}>
+      <header className="sticky top-0 z-50 border-b border-[var(--m-border)] bg-[rgba(10,8,7,0.82)] backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 font-semibold tracking-tight text-[var(--m-text)]">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--m-accent)] to-[var(--m-rose)]">
-              <Heart className="h-4 w-4 text-white" />
-            </div>
-            <span>Anniversary Concierge</span>
+          <Link href="/" className="m-display text-2xl leading-none tracking-wide text-[var(--m-text)]">
+            Anniversary Concierge
           </Link>
-          <nav className="flex items-center gap-6 text-sm">
-            <Link href="/safari-anniversary" className="text-[var(--m-muted)] transition-colors hover:text-[var(--m-text)]">
-              Collections
+          <nav className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.16em] text-[var(--m-text-muted)] md:flex">
+            <Link href="/safari-anniversary" className="transition-colors hover:text-[var(--m-text)]">
+              Safari
             </Link>
-            <Link href="/plan" className="m-btn-primary inline-flex h-9 items-center rounded-full px-5 text-sm">
-              Start Planning
+            <Link href="/winelands-anniversary" className="transition-colors hover:text-[var(--m-text)]">
+              Winelands
+            </Link>
+            <Link href="/coastal-luxury-anniversary" className="transition-colors hover:text-[var(--m-text)]">
+              Coastal
+            </Link>
+            <Link href="/plan" className="m-btn-glass px-4">
+              Plan
             </Link>
           </nav>
+          <Link href="/plan" className="m-btn-primary px-4 md:hidden">
+            Plan
+          </Link>
         </div>
       </header>
 
       <main className="flex-1">{children}</main>
 
-      <footer className="border-t border-[var(--m-border)] bg-[var(--m-bg)]">
-        <div className="container py-10 text-center text-xs text-[var(--m-muted)]">
+      <footer className="border-t border-[var(--m-border)] bg-[rgba(8,7,6,0.88)]">
+        <div className="container py-10 text-center text-xs uppercase tracking-[0.12em] text-[var(--m-text-muted)]">
           <p>South Africa&apos;s Anniversary Concierge</p>
-          <p className="mt-1">Featured venues and recommended stays from our concierge network.</p>
+          <p className="mt-2 normal-case tracking-normal">Curated anniversary escapes, concierge-planned.</p>
         </div>
       </footer>
     </div>

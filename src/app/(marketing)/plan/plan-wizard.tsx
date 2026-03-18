@@ -101,12 +101,12 @@ export function PlanWizard() {
                   }
                 }}
                 className={
-                  "flex h-9 w-9 items-center justify-center rounded-xl text-sm font-semibold " +
+                  "flex h-9 w-9 items-center justify-center rounded-md border text-sm font-semibold " +
                   (index === step
-                    ? "m-btn-primary"
+                    ? "border-[var(--m-border-strong)] bg-[rgba(201,149,99,0.18)] text-[var(--m-text)]"
                     : index < step
-                      ? "bg-[var(--m-accent)]/20 text-[var(--m-accent)]"
-                      : "bg-[var(--m-surface)] text-[var(--m-muted)]")
+                      ? "border-[var(--m-border)] bg-[rgba(201,149,99,0.14)] text-[var(--m-accent-2)]"
+                      : "border-[var(--m-border)] bg-[rgba(16,13,11,0.65)] text-[var(--m-text-muted)]")
                 }
               >
                 {index + 1}
@@ -135,7 +135,7 @@ export function PlanWizard() {
                         : "border-[var(--m-border)] bg-[var(--m-surface)]")
                     }
                   >
-                    <div className={"flex h-10 w-10 items-center justify-center rounded-xl " + (selected ? "bg-[var(--m-accent)] text-white" : "bg-[var(--m-surface-2)] text-[var(--m-muted)]")}>
+                    <div className={"flex h-10 w-10 items-center justify-center rounded-xl " + (selected ? "bg-[var(--m-accent)] text-white" : "bg-[var(--m-surface-2)] text-[var(--m-text-muted)]")}>
                       <Icon className="h-5 w-5" />
                     </div>
                     <span className="font-medium">{vibe}</span>
@@ -159,7 +159,7 @@ export function PlanWizard() {
                 <input type="date" value={form.endDate} onChange={(event) => update({ endDate: event.target.value })} className="h-11 w-full rounded-xl border border-[var(--m-border)] bg-[var(--m-surface)] px-4 text-sm" />
               </div>
             </div>
-            <label className="flex items-center gap-2 text-sm text-[var(--m-muted)]">
+            <label className="flex items-center gap-2 text-sm text-[var(--m-text-muted)]">
               <input type="checkbox" checked={form.datesFlexible} onChange={(event) => update({ datesFlexible: event.target.checked })} />
               Our dates are flexible
             </label>
@@ -210,15 +210,15 @@ export function PlanWizard() {
         {error ? <p className="mt-3 text-sm text-red-600">{error}</p> : null}
 
         <div className="mt-8 flex justify-between">
-          <button type="button" onClick={() => setStep((value) => value - 1)} disabled={step === 0} className="m-btn-glass inline-flex h-11 items-center rounded-full px-6 text-sm font-medium disabled:opacity-30">
+          <button type="button" onClick={() => setStep((value) => value - 1)} disabled={step === 0} className="m-btn-glass disabled:opacity-30">
             <ChevronLeft className="mr-1 h-4 w-4" /> Back
           </button>
           {step < 3 ? (
-            <button type="button" onClick={() => setStep((value) => value + 1)} disabled={!canAdvance()} className="m-btn-primary inline-flex h-11 items-center rounded-full px-8 text-sm disabled:opacity-40">
+            <button type="button" onClick={() => setStep((value) => value + 1)} disabled={!canAdvance()} className="m-btn-primary disabled:opacity-40">
               Next <ChevronRight className="ml-1 h-4 w-4" />
             </button>
           ) : (
-            <button type="button" onClick={handleSubmit} disabled={!canAdvance() || pending} className="m-btn-primary inline-flex h-11 items-center rounded-full px-8 text-sm disabled:opacity-40">
+            <button type="button" onClick={handleSubmit} disabled={!canAdvance() || pending} className="m-btn-primary disabled:opacity-40">
               {pending ? "Submitting..." : "Submit request"}
             </button>
           )}
@@ -228,9 +228,9 @@ export function PlanWizard() {
       <div className="hidden lg:block">
         <div className="m-glass sticky top-24 space-y-3 p-6">
           <p className="text-xs uppercase tracking-widest text-[var(--m-accent)]">Summary</p>
-          <p className="text-sm text-[var(--m-muted)]">{form.vibeTags.join(", ") || "No vibes selected"}</p>
-          <p className="text-sm text-[var(--m-muted)]">{form.budgetBand || "No budget selected"}</p>
-          <p className="text-sm text-[var(--m-muted)]">{form.name || "No names yet"}</p>
+          <p className="text-sm text-[var(--m-text-muted)]">{form.vibeTags.join(", ") || "No vibes selected"}</p>
+          <p className="text-sm text-[var(--m-text-muted)]">{form.budgetBand || "No budget selected"}</p>
+          <p className="text-sm text-[var(--m-text-muted)]">{form.name || "No names yet"}</p>
         </div>
       </div>
     </div>

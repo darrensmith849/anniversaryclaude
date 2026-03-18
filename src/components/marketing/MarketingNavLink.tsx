@@ -15,7 +15,7 @@ export function MarketingNavLink({ href, label }: MarketingNavLinkProps) {
   return (
     <Link
       href={href}
-      className={`m-link-accent relative transition-colors hover:text-[var(--m-cream)] ${active ? "m-link-accent-active text-[var(--m-cream)]" : ""}`}
+      className={`m-link-accent relative transition-colors hover:text-[var(--m-ink)] ${active ? "m-link-accent-active text-[var(--m-amethyst)]" : ""}`}
       aria-current={active ? "page" : undefined}
     >
       {label}

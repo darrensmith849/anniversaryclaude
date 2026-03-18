@@ -1,4 +1,15 @@
 import Link from "next/link";
+import Image from "next/image";
+import { CollectionRail } from "@/components/marketing/home/CollectionRail";
+import { HeroMedia, type HeroMediaClip } from "@/components/marketing/home/HeroMedia";
+import { JourneyExplorer } from "@/components/marketing/home/JourneyExplorer";
+import { PhotoCard } from "@/components/marketing/home/PhotoCard";
+
+const heroClips: HeroMediaClip[] = [
+  { src: "/videos/hero/hero-01-kruger.mp4", poster: "/images/hero/hero-01-kruger.jpg" },
+  { src: "/videos/hero/hero-02-cape-town.mp4", poster: "/images/hero/hero-02-cape-town.jpg" },
+  { src: "/videos/hero/hero-03-winelands.mp4", poster: "/images/hero/hero-03-winelands.jpg" },
+];
 
 const heroChips = [
   "Safari Escapes",
@@ -15,18 +26,24 @@ const editorialCards = [
     title: "Curated Getaways",
     text: "Luxury stays selected for milestone moments, with route and pacing built for celebration.",
     href: "/safari-anniversary",
+    imageSrc: "/images/sa/kruger-safari.jpg",
+    imageAlt: "Safari reserve image",
   },
   {
     overline: "Planning",
     title: "Concierge Planning",
     text: "Seamless anniversary planning with thoughtful sequencing, reservations, and stay logistics.",
     href: "/plan",
+    imageSrc: "/images/sa/cape-town-table-mountain.jpg",
+    imageAlt: "Cape Town and Table Mountain",
   },
   {
     overline: "Signature",
     title: "Signature Add-Ons",
     text: "The details that elevate the stay, from private dining moments to bespoke in-room touches.",
     href: "/winelands-anniversary",
+    imageSrc: "/images/sa/luxury-hotel-interior.jpg",
+    imageAlt: "Luxury hotel interior detail",
   },
 ];
 
@@ -34,16 +51,10 @@ export default function HomePage() {
   return (
     <div className="home-editorial-root flex flex-col">
       <section className="home-hero relative min-h-screen px-4 pb-12 pt-24 md:pt-28">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/hero/hero-02-cape-town.jpg')" }}
-          aria-hidden="true"
-        />
+        <HeroMedia clips={heroClips} />
 
-        <div className="home-hero-overlay absolute inset-0" aria-hidden="true" />
-
-        <div className="container relative z-10 flex min-h-[74vh] items-center justify-center">
-          <div className="mx-auto max-w-[54rem] text-center">
+        <div className="container relative z-10 flex min-h-[72vh] items-center justify-center">
+          <div className="home-hero-panel mx-auto max-w-[54rem] text-center">
             <p className="m-overline">South Africa&apos;s Anniversary Concierge</p>
             <h1 className="m-display mt-4 text-5xl leading-[0.95] text-[var(--m-text)] md:text-7xl xl:text-[5.5rem]">
               Romantic <span className="home-hero-accent">Journeys</span>,
@@ -75,7 +86,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="m-section px-4">
+      <section className="m-section px-4 pt-10">
+        <div className="container">
+          <CollectionRail />
+        </div>
+      </section>
+
+      <JourneyExplorer />
+
+      <section className="m-section px-4 pt-0">
         <div className="container">
           <div className="home-boxed-panel grid gap-10 p-7 md:p-10 lg:grid-cols-[1.25fr_0.9fr]">
             <div className="space-y-4">
@@ -101,29 +120,26 @@ export default function HomePage() {
       </section>
 
       <section className="m-section px-4 pt-0">
-        <div className="container relative space-y-12">
-          <div className="max-w-3xl space-y-4">
-            <p className="m-overline">How It Works</p>
-            <h2 className="m-display text-4xl leading-tight text-[var(--m-text)] md:text-5xl">
-              Every Anniversary Itinerary,
-              <br />
-              Curated End To End
-            </h2>
-            <p className="max-w-xl text-[var(--m-text-muted)]">
-              Discover recommended stays, shape your preferred mood, and move from first brief to confirmed celebration with concierge guidance at each step.
-            </p>
-          </div>
-
+        <div className="container relative">
           <div className="grid gap-5 lg:grid-cols-3">
             {editorialCards.map((card) => (
-              <article key={card.title} className="home-card p-7">
-                <p className="m-overline">{card.overline}</p>
-                <h3 className="m-display mt-3 text-3xl text-[var(--m-text)]">{card.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--m-text-muted)]">{card.text}</p>
-                <Link href={card.href} className="home-link mt-6 inline-flex text-xs uppercase tracking-[0.15em]">
-                  Explore
-                </Link>
-              </article>
+              <PhotoCard key={card.title}>
+                <article className="home-card overflow-hidden p-0">
+                  <div className="relative h-44 w-full overflow-hidden border-b border-[var(--m-border)]">
+                    {/* Keeping imagery inside boxed cards for readability */}
+                    <Image src={card.imageSrc} alt={card.imageAlt} fill className="object-cover" />
+                    <div className="m-img-overlay absolute inset-0" />
+                  </div>
+                  <div className="p-7">
+                    <p className="m-overline">{card.overline}</p>
+                    <h3 className="m-display mt-3 text-3xl text-[var(--m-text)]">{card.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-[var(--m-text-muted)]">{card.text}</p>
+                    <Link href={card.href} className="home-link mt-6 inline-flex text-xs uppercase tracking-[0.15em]">
+                      Explore
+                    </Link>
+                  </div>
+                </article>
+              </PhotoCard>
             ))}
           </div>
         </div>

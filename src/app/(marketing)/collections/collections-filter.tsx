@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Collection } from "@/data/collections";
+import { PhotoCard } from "@/components/marketing/home/PhotoCard";
 
 const VIBE_OPTIONS = [
   { id: "all", label: "All" },
@@ -44,8 +45,8 @@ export function CollectionsFilter({ collections }: { collections: Collection[] }
               className={
                 "rounded border px-3 py-2 text-[11px] uppercase tracking-[0.12em] transition-colors " +
                 (vibe === option.id
-                  ? "border-[var(--m-border-strong)] bg-[rgba(201,149,99,0.18)] text-[var(--m-text)]"
-                  : "border-[var(--m-border)] bg-[rgba(16,13,11,0.6)] text-[var(--m-text-muted)] hover:text-[var(--m-text)]")
+                  ? "border-[var(--m-border-strong)] bg-[rgba(109,40,217,0.08)] text-[var(--m-ink)]"
+                  : "border-[var(--m-border)] bg-[rgba(255,255,255,0.7)] text-[var(--m-text-muted)] hover:text-[var(--m-ink)]")
               }
             >
               {option.label}
@@ -58,7 +59,7 @@ export function CollectionsFilter({ collections }: { collections: Collection[] }
           <select
             value={region}
             onChange={(event) => setRegion(event.target.value)}
-            className="h-10 rounded border border-[var(--m-border)] bg-[rgba(16,13,11,0.8)] px-3 text-xs text-[var(--m-text)]"
+            className="h-10 rounded border border-[var(--m-border)] bg-[rgba(255,255,255,0.8)] px-3 text-xs text-[var(--m-ink)]"
           >
             {REGION_OPTIONS.map((option) => (
               <option key={option.id} value={option.id}>
@@ -71,22 +72,24 @@ export function CollectionsFilter({ collections }: { collections: Collection[] }
 
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {filtered.map((collection) => (
-          <Link key={collection.slug} href={collection.href} className="m-card group relative min-h-[20rem]">
-            <div className="m-img-overlay absolute inset-0">
-              <Image
-                src={collection.imageSrc}
-                alt={collection.imageAlt}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 z-10 p-5">
-              <p className="m-overline">{collection.region}</p>
-              <p className="m-display mt-2 text-3xl text-[var(--m-text)]">{collection.title}</p>
-              <p className="mt-1 text-sm text-[var(--m-text-muted)]">{collection.subtitle}</p>
-            </div>
-          </Link>
+          <PhotoCard key={collection.slug}>
+            <Link href={collection.href} className="m-card group relative min-h-[20rem]">
+              <div className="m-img-overlay absolute inset-0">
+                <Image
+                  src={collection.imageSrc}
+                  alt={collection.imageAlt}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 z-10 p-5">
+                <p className="m-overline">{collection.region}</p>
+                <p className="m-display mt-2 text-3xl text-[var(--m-text)]">{collection.title}</p>
+                <p className="mt-1 text-sm text-[var(--m-text-muted)]">{collection.subtitle}</p>
+              </div>
+            </Link>
+          </PhotoCard>
         ))}
       </div>
 

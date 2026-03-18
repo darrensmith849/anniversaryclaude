@@ -23,10 +23,10 @@ export default function MarketingLayout({
     <div className={`marketing-theme ${serif.variable} ${sans.variable} m-body flex min-h-screen flex-col`}>
       <header className="m-nav-shell sticky top-0 z-50 border-b border-[var(--m-border)] backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/" className="m-display text-2xl leading-none tracking-wide text-[var(--m-cream)]">
+          <Link href="/" className="m-display text-2xl leading-none tracking-wide text-[var(--m-ink)]">
             Anniversary Concierge
           </Link>
-          <nav className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.16em] text-[rgba(246,241,234,0.74)] md:flex">
+          <nav className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.16em] text-[var(--m-muted)] md:flex">
             <MarketingNavLink href="/safari-anniversary" label="Safari" />
             <MarketingNavLink href="/winelands-anniversary" label="Winelands" />
             <MarketingNavLink href="/coastal-luxury-anniversary" label="Coastal" />
@@ -42,10 +42,10 @@ export default function MarketingLayout({
 
       <main className="flex-1">{children}</main>
 
-      <footer className="border-t border-[var(--m-border)] bg-[rgba(11,16,32,0.9)]">
-        <div className="container py-10 text-center text-xs uppercase tracking-[0.12em] text-[rgba(246,241,234,0.72)]">
+      <footer className="border-t border-[var(--m-border)] bg-[rgba(255,255,255,0.82)]">
+        <div className="container py-10 text-center text-xs uppercase tracking-[0.12em] text-[var(--m-muted)]">
           <p>South Africa&apos;s Anniversary Concierge</p>
-          <p className="mt-2 normal-case tracking-normal text-[rgba(246,241,234,0.6)]">Curated anniversary escapes, concierge-planned.</p>
+          <p className="mt-2 normal-case tracking-normal">Curated anniversary escapes, concierge-planned.</p>
         </div>
       </footer>
     </div>

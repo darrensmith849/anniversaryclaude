@@ -2,6 +2,11 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { getDb } from "@/lib/db";
+import {
+  isLoginBlocked,
+  registerLoginFailure,
+  registerLoginSuccess,
+} from "@/lib/auth/rate-limit";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -12,22 +17,35 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+
+        const email = String(credentials.email).toLowerCase().trim();
+        const password = String(credentials.password);
+
+        if (isLoginBlocked(email)) {
+          return null;
+        }
 
         const db = getDb();
         const user = await db.user.findUnique({
-          where: { email: credentials.email as string },
+          where: { email },
         });
 
-        if (!user) return null;
+        if (!user) {
+          registerLoginFailure(email);
+          return null;
+        }
 
-        const valid = await bcrypt.compare(
-          credentials.password as string,
-          user.hashedPassword
-        );
+        const valid = await bcrypt.compare(password, user.hashedPassword);
 
-        if (!valid) return null;
+        if (!valid) {
+          registerLoginFailure(email);
+          return null;
+        }
 
+        registerLoginSuccess(email);
         return { id: user.id, email: user.email, name: user.name };
       },
     }),

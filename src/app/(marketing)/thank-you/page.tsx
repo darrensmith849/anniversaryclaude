@@ -54,7 +54,7 @@ export default function ThankYouPage() {
             Back to Home
           </Link>
           <Link
-            href="/collections"
+            href="/winelands-anniversary"
             className="m-btn-primary inline-flex h-11 items-center rounded-full px-6 text-sm"
           >
             Browse Collections

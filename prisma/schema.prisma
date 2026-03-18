@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ── Admin user ──────────────────────────────────────────────
 model User {
   id             String   @id @default(cuid())
   email          String   @unique
@@ -18,7 +17,6 @@ model User {
   updatedAt      DateTime @updatedAt
 }
 
-// ── Client (couple / lead) ──────────────────────────────────
 model Client {
   id               String               @id @default(cuid())
   name             String
@@ -27,8 +25,8 @@ model Client {
   timezone         String               @default("Africa/Johannesburg")
   city             String?
   anniversaryDate  DateTime?
+  preferences      String?
   dietaryAllergies String?
-  notes            String?
   createdAt        DateTime             @default(now())
   updatedAt        DateTime             @updatedAt
   requests         AnniversaryRequest[]
@@ -36,16 +34,15 @@ model Client {
   emailJobs        EmailJob[]
 }
 
-// ── Anniversary Request (pipeline) ──────────────────────────
 enum RequestStatus {
   NEW
-  QUALIFYING
-  PLANNING
-  PROPOSED
-  CONFIRMED
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
+  QUALIFIED
+  SHORTLIST_SENT
+  OUTREACH_IN_PROGRESS
+  OPTIONS_RECEIVED
+  DECIDED
+  BOOKED
+  COMPLETE
 }
 
 model AnniversaryRequest {
@@ -66,7 +63,6 @@ model AnniversaryRequest {
   emailJobs     EmailJob[]
 }
 
-// ── Stay ────────────────────────────────────────────────────
 enum StayStatus {
   DRAFT
   PROPOSED
@@ -76,24 +72,52 @@ enum StayStatus {
 }
 
 model Stay {
-  id           String        @id @default(cuid())
-  requestId    String
-  request      AnniversaryRequest @relation(fields: [requestId], references: [id])
-  clientId     String
-  client       Client        @relation(fields: [clientId], references: [id])
-  propertyName String
-  location     String?
-  checkIn      DateTime?
-  checkOut     DateTime?
-  status       StayStatus    @default(DRAFT)
-  notes        String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  tasks        Task[]
-  emailJobs    EmailJob[]
+  id                      String             @id @default(cuid())
+  requestId               String
+  request                 AnniversaryRequest @relation(fields: [requestId], references: [id])
+  clientId                String
+  client                  Client             @relation(fields: [clientId], references: [id])
+  propertyName            String
+  location                String?
+  checkIn                 DateTime?
+  checkOut                DateTime?
+  nights                  Int?
+  status                  StayStatus         @default(DRAFT)
+  costAmount              Decimal?           @db.Decimal(12, 2)
+  costCurrency            String             @default("ZAR")
+  confirmationNumber      String?
+  cancellationPolicy      String?
+  bookingMethod           String?
+  travellersCount         Int?
+  roomType                String?
+  clientPreferences       String?
+  hostAgency              String?
+  guestEmail              String?
+  memberId                String?
+  perksAdded              Boolean            @default(false)
+  requestsCheckedAndAdded Boolean            @default(false)
+  addedToRewardsTracker   Boolean            @default(false)
+  isVvip                  Boolean            @default(false)
+  vipFollowUpStatus       String?
+  checkInStatus           String?
+  notesForAdmin           String?
+  customFields            Json?
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
+  tasks                   Task[]
+  emailJobs               EmailJob[]
 }
 
-// ── Partner ─────────────────────────────────────────────────
+model ActivityLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String
+  details   String?
+  userId    String?
+  createdAt DateTime @default(now())
+}
+
 enum PartnerCategory {
   ACCOMMODATION
   RESTAURANT
@@ -106,17 +130,16 @@ enum PartnerCategory {
 }
 
 model Partner {
-  id               String          @id @default(cuid())
-  name             String
-  category         PartnerCategory
-  location         String?
-  tags             String[]
-  isOfficialPartner Boolean        @default(false)
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
+  id                String          @id @default(cuid())
+  name              String
+  category          PartnerCategory
+  location          String?
+  tags              String[]
+  isOfficialPartner Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
 }
 
-// ── Task ────────────────────────────────────────────────────
 enum TaskStatus {
   TODO
   IN_PROGRESS
@@ -132,20 +155,19 @@ enum TaskPriority {
 }
 
 model Task {
-  id        String       @id @default(cuid())
+  id        String              @id @default(cuid())
   title     String
-  status    TaskStatus   @default(TODO)
-  priority  TaskPriority @default(MEDIUM)
+  status    TaskStatus          @default(TODO)
+  priority  TaskPriority        @default(MEDIUM)
   dueAt     DateTime?
   requestId String?
   request   AnniversaryRequest? @relation(fields: [requestId], references: [id])
   stayId    String?
-  stay      Stay?        @relation(fields: [stayId], references: [id])
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  stay      Stay?               @relation(fields: [stayId], references: [id])
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
 }
 
-// ── Email Template ──────────────────────────────────────────
 enum EmailTemplateType {
   PARTNER_OUTREACH
   VIP_PERKS_REQUEST
@@ -166,7 +188,6 @@ model EmailTemplate {
   emailJobs       EmailJob[]
 }
 
-// ── Email Job (gated pipeline) ──────────────────────────────
 enum EmailJobStatus {
   DRAFT
   NEEDS_REVIEW
@@ -176,51 +197,28 @@ enum EmailJobStatus {
 }
 
 model EmailJob {
-  id          String         @id @default(cuid())
-  templateId  String?
-  template    EmailTemplate? @relation(fields: [templateId], references: [id])
-  status      EmailJobStatus @default(DRAFT)
-
-  // Recipients
-  toAddresses String[]
-  ccAddresses String[]
+  id           String              @id @default(cuid())
+  templateId   String?
+  template     EmailTemplate?      @relation(fields: [templateId], references: [id])
+  status       EmailJobStatus      @default(DRAFT)
+  toAddresses  String[]
+  ccAddresses  String[]
   bccAddresses String[]
-
-  // Rendered content
-  subject     String
-  bodyHtml    String
-  bodyText    String?
-
-  // Linked entities (optional)
-  requestId   String?
-  request     AnniversaryRequest? @relation(fields: [requestId], references: [id])
-  stayId      String?
-  stay        Stay?          @relation(fields: [stayId], references: [id])
-  clientId    String?
-  client      Client?        @relation(fields: [clientId], references: [id])
-
-  // Approval gate
-  approvedBy  String?
-  approvedAt  DateTime?
-
-  // Sending
-  sentAt      DateTime?
-  resendId    String?
+  subject      String
+  bodyHtml     String
+  bodyText     String?
+  requestId    String?
+  request      AnniversaryRequest? @relation(fields: [requestId], references: [id])
+  stayId       String?
+  stay         Stay?               @relation(fields: [stayId], references: [id])
+  clientId     String?
+  client       Client?             @relation(fields: [clientId], references: [id])
+  approvedBy   String?
+  approvedAt   DateTime?
+  sentAt       DateTime?
+  resendId     String?
   errorMessage String?
-
-  // Metadata
-  metadata    Json?
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-}
-
-// ── Activity Log (append-only) ──────────────────────────────
-model ActivityLog {
-  id        String   @id @default(cuid())
-  action    String
-  entity    String
-  entityId  String
-  details   String?
-  userId    String?
-  createdAt DateTime @default(now())
+  metadata     Json?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
 }

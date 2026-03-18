@@ -61,7 +61,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-4xl text-center">
             <p className="m-overline">South Africa&apos;s Anniversary Concierge</p>
             <h1 className="m-display mt-4 text-5xl leading-[0.95] text-[var(--m-ink)] md:text-7xl xl:text-[5.5rem]">
-              Romantic Journeys,
+              Romantic <span className="m-gradient-text">Journeys</span>,
               <br />
               Planned Beautifully
             </h1>
@@ -81,39 +81,10 @@ export default function HomePage() {
 
         <div className="container relative z-10 pb-2">
           <div className="m-glass m-hero-strip px-3 py-3 md:px-4 md:py-4">
-            {heroChips.map((chip) => (
-              <div key={chip} className="m-chip">
+            {heroChips.map((chip, index) => (
+              <div key={chip} className={`m-chip ${index === 0 ? "m-chip-active" : ""}`}>
                 {chip}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="m-section px-4">
-        <div className="container relative space-y-12">
-          <div className="max-w-3xl space-y-4">
-            <p className="m-overline">What We Do</p>
-            <h2 className="m-display text-4xl leading-tight text-[var(--m-ink)] md:text-6xl">
-              Curated Anniversary Escapes,
-              <br />
-              Structured With Editorial Precision
-            </h2>
-            <p className="max-w-2xl text-[var(--m-muted)]">
-              South Africa collections, concierge-led planning, and elevated touches designed around the way you want to celebrate.
-            </p>
-          </div>
-
-          <div className="grid gap-5 lg:grid-cols-3">
-            {editorialCards.map((card) => (
-              <article key={card.title} className="m-card p-7">
-                <p className="m-overline">{card.overline}</p>
-                <h3 className="m-display mt-3 text-3xl text-[var(--m-ink)]">{card.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--m-muted)]">{card.text}</p>
-                <Link href={card.href} className="mt-6 inline-flex text-xs uppercase tracking-[0.15em] text-[var(--m-amethyst)] hover:text-[var(--m-ink)]">
-                  Explore
-                </Link>
-              </article>
             ))}
           </div>
         </div>
@@ -133,6 +104,35 @@ export default function HomePage() {
             </p>
           </div>
           <JourneyArc />
+        </div>
+      </section>
+
+      <section className="m-section px-4 pt-0">
+        <div className="container relative space-y-12">
+          <div className="max-w-3xl space-y-4">
+            <p className="m-overline">What We Do</p>
+            <h2 className="m-display text-4xl leading-tight text-[var(--m-ink)] md:text-6xl">
+              Curated Anniversary Escapes,
+              <br />
+              Structured With Editorial Precision
+            </h2>
+            <p className="max-w-2xl text-[var(--m-muted)]">
+              South Africa collections, concierge-led planning, and elevated touches designed around the way you want to celebrate.
+            </p>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-3">
+            {editorialCards.map((card) => (
+              <article key={card.title} className="m-card p-7">
+                <p className="m-overline">{card.overline}</p>
+                <h3 className="m-display mt-3 text-3xl text-[var(--m-ink)]">{card.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--m-muted)]">{card.text}</p>
+                <Link href={card.href} className="m-link-accent mt-6 inline-flex text-xs uppercase tracking-[0.15em] text-[var(--m-amethyst)]">
+                  Explore
+                </Link>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

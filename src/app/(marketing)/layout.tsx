@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { MarketingNavLink } from "@/components/marketing/MarketingNavLink";
 
 const serif = Cormorant_Garamond({
   subsets: ["latin"],
@@ -26,15 +27,9 @@ export default function MarketingLayout({
             Anniversary Concierge
           </Link>
           <nav className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.16em] text-[rgba(246,241,234,0.74)] md:flex">
-            <Link href="/safari-anniversary" className="transition-colors hover:text-[var(--m-cream)]">
-              Safari
-            </Link>
-            <Link href="/winelands-anniversary" className="transition-colors hover:text-[var(--m-cream)]">
-              Winelands
-            </Link>
-            <Link href="/coastal-luxury-anniversary" className="transition-colors hover:text-[var(--m-cream)]">
-              Coastal
-            </Link>
+            <MarketingNavLink href="/safari-anniversary" label="Safari" />
+            <MarketingNavLink href="/winelands-anniversary" label="Winelands" />
+            <MarketingNavLink href="/coastal-luxury-anniversary" label="Coastal" />
             <Link href="/plan" className="m-btn-glass px-4">
               Plan
             </Link>

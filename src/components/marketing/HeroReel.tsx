@@ -84,9 +84,16 @@ export function HeroReel({ clips, intervalMs = 7000 }: HeroReelProps) {
         />
       )}
 
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(1000px_560px_at_20%_12%,rgba(109,40,217,0.22),transparent_58%),radial-gradient(760px_460px_at_80%_72%,rgba(242,179,95,0.16),transparent_62%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0.46)_46%,rgba(251,250,255,0.72)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_34%,rgba(11,16,32,0.22)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(11,16,32,0.06)_0%,rgba(11,16,32,0.09)_45%,rgba(11,16,32,0.14)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_36%,rgba(11,16,32,0.34)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(1000px_560px_at_20%_12%,var(--m-glow-a),transparent_58%),radial-gradient(740px_430px_at_76%_24%,var(--m-glow-b),transparent_60%),radial-gradient(760px_460px_at_80%_72%,var(--m-glow-c),transparent_62%)]" />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.05]"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
+        }}
+      />
 
       {reelEnabled ? (
         <div className="absolute bottom-5 right-5 z-20 flex items-center gap-2">

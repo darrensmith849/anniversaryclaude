@@ -44,7 +44,7 @@ export function JourneyArc() {
         ].map((node) => (
           <g key={node.label}>
             <circle cx={node.x} cy={node.y} r="11" fill="rgba(255,255,255,0.95)" stroke="var(--m-border)" strokeWidth="1.5" />
-            <circle cx={node.x} cy={node.y} r="4" fill="var(--m-amethyst)" />
+            <circle className="journey-node-core" cx={node.x} cy={node.y} r="4" fill="var(--m-amethyst)" />
             <text
               x={node.x}
               y={node.y - 20}

@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "Anniversary Concierge | Luxury Celebrations in South Africa",
+  title: "Luxury Anniversary Concierge | South Africa",
   description:
-    "Bespoke anniversary planning for discerning couples. Luxury stays, curated experiences, and unforgettable moments across South Africa.",
+    "Bespoke anniversary experiences across South Africa — safari, winelands, coastal escapes, and more. Let us curate your perfect celebration.",
 };
 
 export default function RootLayout({
@@ -17,10 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div aria-hidden="true" className="site-backdrop" />
-        {children}
-      </body>
+      <body className="min-h-screen antialiased">{children}</body>
     </html>
   );
 }

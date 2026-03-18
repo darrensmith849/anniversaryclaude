@@ -1,25 +1,32 @@
 import Link from "next/link";
+import { Heart } from "lucide-react";
+
+export const metadata = {
+  title: "Thank You | Anniversary Concierge",
+};
 
 export default function ThankYouPage() {
   return (
-    <div className="px-4 py-20 md:py-28">
-      <div className="container max-w-2xl">
-        <div className="m-glass p-8 text-center md:p-12">
-          <p className="m-overline">Request Received</p>
-          <h1 className="m-display mt-3 text-5xl text-[var(--m-text)] md:text-6xl">Thank You</h1>
-          <p className="mx-auto mt-4 max-w-xl text-[var(--m-text-muted)]">
-            Your concierge brief is in. We&apos;ll review your preferences and return with a curated next step shortly.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/" className="m-btn-glass">
-              Back Home
-            </Link>
-            <Link href="/winelands-anniversary" className="m-btn-primary">
-              Browse Collections
-            </Link>
-          </div>
+    <section className="flex min-h-[60vh] items-center justify-center py-20">
+      <div className="mx-auto max-w-lg px-6 text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-lilac-50 text-lilac-500">
+          <Heart size={28} />
         </div>
+        <h1 className="mt-6 text-3xl font-serif text-ink">
+          Thank you for your brief
+        </h1>
+        <p className="mt-4 text-neutral-500 leading-relaxed">
+          Your dedicated concierge will review your anniversary brief and
+          be in touch within 24 hours to start crafting your perfect
+          celebration.
+        </p>
+        <Link
+          href="/"
+          className="mt-8 inline-block rounded-lg border border-neutral-300 px-6 py-2.5 text-sm font-medium text-neutral-700 hover:bg-white transition-colors"
+        >
+          Back to Home
+        </Link>
       </div>
-    </div>
+    </section>
   );
 }

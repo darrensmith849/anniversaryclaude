@@ -1,51 +1,47 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
-import { RequestInspector } from "./request-inspector";
+import { Badge } from "@/components/ui/badge";
+import { statusLabel } from "@/lib/utils";
+import { RequestTabs } from "@/components/admin/RequestTabs";
 
-export default async function RequestDetailPage({ params }: { params: { id: string } }) {
+export default async function RequestDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   const db = getDb();
 
   const request = await db.anniversaryRequest.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       client: true,
-      stays: { orderBy: { createdAt: "desc" } },
+      stays: true,
+      tasks: true,
+      activityLogs: { orderBy: { createdAt: "desc" } },
     },
   });
 
-  if (!request) {
-    notFound();
-  }
-
-  const activity = await db.activityLog.findMany({
-    where: {
-      OR: [
-        { entity: "AnniversaryRequest", entityId: request.id },
-        { entity: "Client", entityId: request.clientId },
-        { entity: "Stay", entityId: { in: request.stays.map((stay) => stay.id) } },
-      ],
-    },
-    orderBy: { createdAt: "desc" },
-    take: 100,
-  });
+  if (!request) notFound();
 
   return (
-    <div className="space-y-6">
+    <>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Request Detail</h1>
-          <p className="text-muted-foreground">{request.client.name} · {request.client.email}</p>
+          <h1 className="text-2xl font-serif text-ink">
+            {request.client.name}
+          </h1>
+          <p className="mt-1 text-sm text-neutral-500">
+            {request.client.email}
+            {request.client.phone && ` · ${request.client.phone}`}
+          </p>
         </div>
-        <Link href="/admin/requests" className="text-sm text-muted-foreground hover:text-foreground">
-          Back to requests
-        </Link>
+        <Badge variant="secondary" className="text-sm">
+          {statusLabel(request.status)}
+        </Badge>
       </div>
 
-      <RequestInspector
-        request={JSON.parse(JSON.stringify(request))}
-        activity={JSON.parse(JSON.stringify(activity))}
-      />
-    </div>
+      <RequestTabs request={request} />
+    </>
   );
 }

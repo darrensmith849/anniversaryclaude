@@ -11,27 +11,47 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        // Luxury palette
-        ivory: "#FDFBF7",
-        ink: "#1A1A2E",
-        lilac: {
-          50: "#F8F6FC",
-          100: "#F0EBFA",
-          200: "#E0D5F5",
-          300: "#C9B8EC",
-          400: "#A98FDB",
-          500: "#8B6EC5",
+        // Luxury neutral palette
+        pearl: "#F7F5F0",
+        stone: {
+          50: "#F3F1EC",
+          100: "#EBE8E1",
+          200: "#DDD8CE",
+          300: "#C8C1B4",
+          400: "#A69E8F",
+          500: "#8A8272",
         },
-        sand: {
-          50: "#FBF9F4",
+        champagne: {
+          50: "#FAF8F3",
           100: "#F5F0E6",
-          200: "#E8DFD0",
-          300: "#D4C5AD",
+          200: "#EDE5D5",
+          300: "#DDD2BC",
         },
-        amber: {
-          600: "#B45309",
-          700: "#92400E",
-          800: "#78350F",
+        greige: {
+          50: "#F5F3EF",
+          100: "#EDEBE5",
+          200: "#E0DCD3",
+          300: "#CCC6B9",
+        },
+        silver: {
+          50: "#F8F8F7",
+          100: "#F0F0EE",
+          200: "#E4E3E0",
+          300: "#CDCCC8",
+        },
+        ink: "#1A1A2E",
+        charcoal: {
+          700: "#2C2C3A",
+          800: "#232333",
+          900: "#1A1A2E",
+        },
+        // Antique brass — aged metallic warmth, NOT orange
+        brass: {
+          300: "#C2B59E",
+          400: "#A89D84",
+          500: "#8B7D66",
+          600: "#73684F",
+          700: "#5C5342",
         },
       },
       fontFamily: {

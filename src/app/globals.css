@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #FDFBF7;
+  --background: #F7F5F0;
   --foreground: #1A1A2E;
+  --surface-warm: #F3F1EC;
+  --surface-champagne: #FAF8F3;
+  --surface-silver: #F8F8F7;
+  --accent-brass: #8B7D66;
 }
 
 body {
@@ -12,15 +16,15 @@ body {
   color: var(--foreground);
 }
 
-/* Subtle cinematic backdrop glow */
+/* Subtle warm ambient glow — restrained luxury feel */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse 50% 35% at 15% 5%, rgba(169, 143, 219, 0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 85% 85%, rgba(180, 83, 9, 0.03) 0%, transparent 70%);
+    radial-gradient(ellipse 50% 35% at 15% 5%, rgba(194, 181, 158, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 85% 85%, rgba(26, 26, 46, 0.02) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -30,26 +34,77 @@ h1, h2, h3 {
   letter-spacing: -0.01em;
 }
 
-/* Smooth focus */
+/* Smooth focus — soft brass ring */
 *:focus-visible {
-  outline: 2px solid rgba(169, 143, 219, 0.4);
+  outline: 2px solid rgba(139, 125, 102, 0.3);
   outline-offset: 2px;
 }
 
-/* Card hover lift */
 @layer utilities {
+  /* Card hover lift — layered premium shadow */
   .hover-lift {
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .hover-lift:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+    box-shadow:
+      0 4px 12px rgba(26, 26, 46, 0.04),
+      0 12px 32px rgba(26, 26, 46, 0.06);
   }
 
+  /* Editorial glass panel — sits over hero imagery */
   .editorial-panel {
-    background: rgba(253, 251, 247, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(247, 245, 240, 0.93);
+    backdrop-filter: blur(20px) saturate(1.15);
+    -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  }
+
+  /* Section surface tones */
+  .surface-warm {
+    background-color: var(--surface-warm);
+  }
+  .surface-champagne {
+    background-color: var(--surface-champagne);
+  }
+  .surface-silver {
+    background-color: var(--surface-silver);
+  }
+
+  /* Thin accent rule */
+  .rule-brass {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168, 157, 132, 0.3), transparent);
+  }
+
+  /* Section divider */
+  .divider-fade {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200, 193, 180, 0.45), transparent);
+  }
+
+  /* Premium CTA base — used on primary buttons */
+  .cta-primary {
+    background-color: #1A1A2E;
+    color: white;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 1px 3px rgba(26, 26, 46, 0.12), 0 4px 12px rgba(26, 26, 46, 0.08);
+  }
+  .cta-primary:hover {
+    background-color: #2C2C3A;
+    box-shadow: 0 2px 6px rgba(26, 26, 46, 0.15), 0 8px 20px rgba(26, 26, 46, 0.10);
+  }
+
+  /* Light CTA on dark backgrounds */
+  .cta-light {
+    background-color: rgba(247, 245, 240, 0.95);
+    color: #1A1A2E;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  .cta-light:hover {
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   }
 }
 
@@ -71,4 +126,8 @@ h1, h2, h3 {
 
 .animate-in-delay {
   animation: fadeInUp 0.5s ease-out 0.15s both;
+}
+
+.animate-in-delay-2 {
+  animation: fadeInUp 0.5s ease-out 0.3s both;
 }
